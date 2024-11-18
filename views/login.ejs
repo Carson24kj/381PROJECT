@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login PAGE</title>
+        <link rel="stylesheet" href="/css/loginStyle.css">
+    </head>
+
+    <body>
+
+        <div class="box-container">
+            <h1>Login</h1>
+            <form action="/login" method="post">
+                <span>Username:</span>
+                <input type="text" placeholder="Username" name="username">
+                <br><br>
+                <span>Password:</span>
+                <input type="password" placeholder="Password" name="password">
+
+                <button type="submit">Login</button>
+                <p id="Message"><%= message %></p>
+
+            </form>
+        </div>
+
+        <script src="Message.js"></script>
+        
+        
+    </body>
+    
+</html>

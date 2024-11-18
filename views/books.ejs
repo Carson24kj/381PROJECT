@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header form {
+            margin: 0;
+        }
+
+        header button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        header button:hover {
+            background-color: #e60000;
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        section {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        form input, form select, form button {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #003366;
+        }
+
+        .book-section {
+            margin-top: 40px;
+        }
+
+        .book-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-item strong {
+            font-size: 18px;
+            color: #004080;
+        }
+
+        .book-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .book-buttons button {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .editButton {
+            background-color: #ffa500;
+            color: white;
+        }
+
+        .editButton:hover {
+            background-color: #cc8400;
+        }
+
+        .deleteButton {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .deleteButton:hover {
+            background-color: #e60000;
+        }
+
+        .success-message, .error-message {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome, <%= username %>!</h1>
+    <form method="post" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+</header>
+
+<h2>Manage Books</h2>
+
+<section id="addBook">
+    <h3>Add New Book</h3>
+    <form>
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="author" placeholder="Author">
+        <input type="number" id="year" placeholder="Year">
+        <select id="genre">
+            <option value="" disabled selected>Select Genre</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Fiction">Fiction</option>
+        </select>
+        <input type="text" id="ISBN" placeholder="ISBN">
+        <button type="button" id="createBook">Add Book</button>
+    </form>
+</section>
+
+<section id="searchBook">
+    <h3>Search Books</h3>
+    <form id="searchForm">
+        <input type="text" id="searchTitle" placeholder="Title">
+        <input type="text" id="searchAuthor" placeholder="Author">
+        <input type="text" id="searchGenre" placeholder="Genre">
+        <input type="number" id="searchYear" placeholder="Year">
+        <button type="button" id="searchButton">Search</button>
+    </form>
+</section>
+
+<section id="bookList">
+    <h3>Current Books</h3>
+
+    <!-- All Genres -->
+    <div class="book-section">
+        <h4>All Genres</h4>
+        <ul>
+            <% books.forEach(book => { %>
+                <li class="book-item">
+                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                    <div class="book-buttons">
+                        <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
+                        <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <!-- Fantasy Books -->
+    <div class="book-section">
+        <h4>Fantasy Books</h4>
+        <ul>
+            <% books.filter(book => book.genre === 'Fantasy').forEach(book => { %>
+                <li class="book-item">
+                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                    <div class="book-buttons">
+                        <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
+                        <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <!-- Non-Fiction Books -->
+    <div class="book-section">
+        <h4>Non-Fiction Books</h4>
+        <ul>
+            <% books.filter(book => book.genre === 'Non-Fiction').forEach(book => { %>
+                <li class="book-item">
+                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                    <div class="book-buttons">
+                        <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
+                        <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <!-- Fiction Books -->
+    <div class="book-section">
+        <h4>Fiction Books</h4>
+        <ul>
+            <% books.filter(book => book.genre === 'Fiction').forEach(book => { %>
+                <li class="book-item">
+                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                    <div class="book-buttons">
+                        <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
+                        <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Book Management System</p>
+</footer>
+
+<script>
+    // Add Book
+    document.getElementById('createBook').addEventListener('click', async () => {
+        const title = document.getElementById('title').value;
+        const author = document.getElementById('author').value;
+        const year = document.getElementById('year').value;
+        const genre = document.getElementById('genre').value;
+        const ISBN = document.getElementById('ISBN').value;
+
+        const response = await fetch(`/books/create?title=${title}&author=${author}&year=${year}&genre=${genre}&ISBN=${ISBN}`);
+        if (response.ok) {
+            alert('Book added successfully!');
+            location.reload();
+        } else {
+            alert('Failed to add book');
+        }
+    });
+
+    // Search Book
+    document.getElementById('searchButton').addEventListener('click', async () => {
+        const title = document.getElementById('searchTitle').value;
+        const author = document.getElementById('searchAuthor').value;
+        const genre = document.getElementById('searchGenre').value;
+        const year = document.getElementById('searchYear').value;
+
+        const response = await fetch(`/books/search?title=${title}&author=${author}&genre=${genre}&year=${year}`);
+        const books = await response.json();
+        console.log(books);
+    });
+
+    // Delete Book
+    document.querySelectorAll('.deleteButton').forEach(button => {
+        button.addEventListener('click', async function () {
+            const id = this.dataset.id;
+            const confirmDelete = confirm('Are you sure you want to delete this book?');
+            if (confirmDelete) {
+                const response = await fetch(`/books/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    alert('Book deleted successfully!');
+                    location.reload();
+                } else {
+                    alert('Failed to delete book');
+                }
+            }
+        });
+    });
+
+    // Edit Book
+    document.querySelectorAll('.editButton').forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.dataset.id;
+            const title = prompt('Enter new title:', this.dataset.title);
+            const author = prompt('Enter new author:', this.dataset.author);
+            const year = prompt('Enter new year:', this.dataset.year);
+            const genre = prompt('Enter new genre (Fantasy, Non-Fiction, Fiction):', this.dataset.genre);
+            const ISBN = prompt('Enter new ISBN:', this.dataset.isbn);
+
+            if (title && author && year && genre && ISBN) {
+                fetch(`/books/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, author, year, genre, ISBN })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Book updated successfully!');
+                            location.reload();
+                        } else {
+                            alert('Failed to update book');
+                        }
+                    });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
