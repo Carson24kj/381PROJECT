@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"  // 確保有啟動命令
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=22.10.0 <23.0.0" // 指定 Node.js 版本範圍
+  },
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^5.1.1", // 確保這是最新版本
     "cookie-session": "^2.1.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
