@@ -169,15 +169,15 @@ app.delete('/books/:id', async (req, res) => {
 // Search books with query
 app.get('/books/search', async (req, res) => {
     try {
-        const { title, author, genre, year } = req.query; // 提取查询参数
+        const { title, author, genre, year } = req.query; // query
         const query = {};
 
-        if (title) query.title = { $regex: title, $options: 'i' }; // 模糊查询标题
-        if (author) query.author = { $regex: author, $options: 'i' }; // 模糊查询作者
-        if (genre) query.genre = { $regex: genre, $options: 'i' }; // 精确匹配类别
-        if (year) query.year = parseInt(year); // 匹配出版年份
+        if (title) query.title = { $regex: title, $options: 'i' }; // tittle
+        if (author) query.author = { $regex: author, $options: 'i' }; // author
+        if (genre) query.genre = { $regex: genre, $options: 'i' }; // genre
+        if (year) query.year = parseInt(year); // years
 
-        const books = await Book.find(query); // 根据条件查询书籍
+        const books = await Book.find(query); // find books
         res.status(200).json(books);
     } catch (err) {
         res.status(500).json({ message: err.message });
