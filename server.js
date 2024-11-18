@@ -156,7 +156,7 @@ app.put('/books/:id', async (req, res) => {
     }
 });
 
-// Delete
+// Delete books
 app.delete('/books/:id', async (req, res) => {
     try {
         await Book.findByIdAndDelete(req.params.id);
