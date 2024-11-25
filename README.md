@@ -1,7 +1,13 @@
 Project info:Public Library System
+cloud-based server URL:
+https://three81project-rddj.onrender.com
+
 Group:21
 Li Sin Chiu 13817508
 To Siu Lap 13709398
+Cheng Wing Choi 13714095
+Chris Limbu 13861857
+Guo Ke Jian 
 
 project_root/
 ├── models/
@@ -61,8 +67,7 @@ models：
 	User.js :Used to declare variables
 
 
-cloud-based server URL:
-www.XXX.com
+
 
 Operation guides:
 A.) Home page (main.html)
