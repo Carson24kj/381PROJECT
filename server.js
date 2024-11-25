@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('cookie-session');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -64,29 +64,21 @@ app.get('/', (req, res) => {
 
 // Login
 app.get('/login', (req, res) => {
-    res.status(200).render('login', {message:''});
+    res.status(200).render('login');
 });
 
 app.post('/login', async (req, res) => {
-
     try {
         const userList = await User.find();
-        
+
         for (let i in userList) {
             if (userList[i].username === req.body.username && userList[i].password === req.body.password) {
                 req.session.authenticated = true;
                 req.session.username = req.body.username;
                 return res.redirect('/home');
-            } else if (req.body.username=='' && req.body.password=='') {
-                return res.redirect('/login');
-            } else if (req.body.username=='') {
-                return res.render("login", {message:'Please type the username'});
-            } else if (req.body.password=='') {
-                return res.render("login", {message:'Please type the password'});
-            } 
+            }
         }
-        req.session.authenticated=false;
-        return res.render("login", {message:'Wrong username or password.'});
+        return res.redirect('/login');
 
     } catch (err) {
         console.error("Login Error:", err);
@@ -156,7 +148,7 @@ app.put('/books/:id', async (req, res) => {
     }
 });
 
-// Delete books
+// Delete
 app.delete('/books/:id', async (req, res) => {
     try {
         await Book.findByIdAndDelete(req.params.id);
@@ -169,20 +161,27 @@ app.delete('/books/:id', async (req, res) => {
 // Search books with query
 app.get('/books/search', async (req, res) => {
     try {
-        const { title, author, genre, year } = req.query; // query
+        const { title, author, genre, year } = req.query; 
         const query = {};
 
-        if (title) query.title = { $regex: title, $options: 'i' }; // tittle
-        if (author) query.author = { $regex: author, $options: 'i' }; // author
-        if (genre) query.genre = { $regex: genre, $options: 'i' }; // genre
-        if (year) query.year = parseInt(year); // years
+        // 根據請求參數動態構建查詢條件
+        if (title) query.title = { $regex: title, $options: 'i' }; 
+        if (author) query.author = { $regex: author, $options: 'i' }; 
+        if (genre) query.genre = { $regex: genre, $options: 'i' }; 
+        if (year) query.year = parseInt(year);
 
-        const books = await Book.find(query); // find books
-        res.status(200).json(books);
+        // 查詢數據庫
+        const books = await Book.find(query);
+
+        // 渲染搜索結果模板
+        res.render('searchResults', { books });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Search Error:", err);
+        res.status(500).send("Internal Server Error");
     }
 });
+
+
 
 //Search at Main page
 app.get('/search', async (req, res) => {
