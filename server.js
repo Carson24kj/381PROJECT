@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('cookie-session');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -171,22 +171,35 @@ app.get('/books/search', async (req, res) => {
         const { title, author, genre, year } = req.query;
         const query = {};
 
-        // 根據請求參數動態構建查詢條件
-        if (title) query.title = { $regex: title, $options: 'i' };
-        if (author) query.author = { $regex: author, $options: 'i' };
-        if (genre) query.genre = { $regex: genre, $options: 'i' };
-        if (year) query.year = parseInt(year);
+        if (title && title.trim() !== '') {
+            query.title = { $regex: title.trim(), $options: 'i' };
+        }
+        if (author && author.trim() !== '') {
+            query.author = { $regex: author.trim(), $options: 'i' };
+        }
+        if (genre && genre.trim() !== '') {
+            query.genre = { $regex: genre.trim(), $options: 'i' };
+        }
+        if (year && !isNaN(parseInt(year))) {
+            query.year = parseInt(year);
+        }
 
-        // 查詢數據庫
+        if (Object.keys(query).length === 0) {
+            return res.status(400).send("Please provide at least one search criterion.");
+        }
+
         const books = await Book.find(query);
 
-        // 渲染搜索結果模板
         res.render('searchResults', { books });
     } catch (err) {
         console.error("Search Error:", err);
         res.status(500).send("Internal Server Error");
     }
 });
+
+
+
+
 
 
 
