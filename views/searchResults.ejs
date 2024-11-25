@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        main {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li strong {
+            color: #004080;
+            font-size: 18px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #004080;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .back-button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Search Results
+</header>
+
+<main>
+    <h2>Your Search Results</h2>
+    
+    <% if (books && books.length > 0) { %>
+        <ul>
+            <% books.forEach(book => { %>
+                <li>
+                    <div>
+                        <strong><%= book.title %></strong><br>
+                        <span>by <%= book.author %> (<%= book.year %>)</span><br>
+                        <span>ISBN: <%= book.ISBN %></span>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p class="no-results">No books found matching your criteria.</p>
+    <% } %>
+
+    <a href="/home" class="back-button">Back to Home</a>
+</main>
+
+<footer>
+    &copy; 2024 Book Management System
+</footer>
+
+</body>
+</html>
