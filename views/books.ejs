@@ -90,7 +90,7 @@
             margin-top: 40px;
         }
 
-        .ul {
+        ul {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -214,10 +214,10 @@
 <section id="searchBook">
     <h3>Search Books</h3>
     <form id="searchForm" method="get" action="/books/search">
-        <input type="text" id="searchTitle" placeholder="Title">
-        <input type="text" id="searchAuthor" placeholder="Author">
-        <input type="text" id="searchGenre" placeholder="Genre">
-        <input type="number" id="searchYear" placeholder="Year">
+       <input type="text" name="title" placeholder="Title">
+    <input type="text" name="author" placeholder="Author">
+    <input type="text" name="genre" placeholder="Genre">
+    <input type="number" name="year" placeholder="Year">
         <button type="submit" id="searchButton">Search</button>
     </form>
 </section>
@@ -231,7 +231,12 @@
         <ul>
             <% books.forEach(book => { %>
                 <li class="book-item">
-                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                <div class="book-info">
+                      <strong class="book-title"><%= book.title %></strong>
+                <span class="book-details">
+                    by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                </span>
+            </div>
                     <div class="book-buttons">
                         <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
                         <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
@@ -247,7 +252,12 @@
         <ul>
             <% books.filter(book => book.genre === 'Fantasy').forEach(book => { %>
                 <li class="book-item">
-                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                    <div class="book-info">
+                <strong class="book-title"><%= book.title %></strong>
+                <span class="book-details">
+                    by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                </span>
+            </div>
                     <div class="book-buttons">
                         <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
                         <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
@@ -263,7 +273,12 @@
         <ul>
             <% books.filter(book => book.genre === 'Non-Fiction').forEach(book => { %>
                 <li class="book-item">
-                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                   <div class="book-info">
+                <strong class="book-title"><%= book.title %></strong>
+                <span class="book-details">
+                    by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                </span>
+            </div>
                     <div class="book-buttons">
                         <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
                         <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
@@ -279,7 +294,12 @@
         <ul>
             <% books.filter(book => book.genre === 'Fiction').forEach(book => { %>
                 <li class="book-item">
-                    <strong><%= book.title %></strong> by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                   <div class="book-info">
+                <strong class="book-title"><%= book.title %></strong>
+                <span class="book-details">
+                    by <%= book.author %> (<%= book.year %>) - ISBN: <%= book.ISBN %>
+                </span>
+            </div>
                     <div class="book-buttons">
                         <button class="editButton" data-id="<%= book._id %>" data-title="<%= book.title %>" data-author="<%= book.author %>" data-year="<%= book.year %>" data-genre="<%= book.genre %>" data-isbn="<%= book.ISBN %>">Edit</button>
                         <button class="deleteButton" data-id="<%= book._id %>">Delete</button>
