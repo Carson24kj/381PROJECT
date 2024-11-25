@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 
 // Login
 app.get('/login', (req, res) => {
-    res.status(200).render('login');
+    res.status(200).render('login', {message:''});
 });
 
 app.post('/login', async (req, res) => {
@@ -76,9 +76,16 @@ app.post('/login', async (req, res) => {
                 req.session.authenticated = true;
                 req.session.username = req.body.username;
                 return res.redirect('/home');
+            } else if (req.body.username=='' && req.body.password=='') {
+                return res.redirect('/login');
+            } else if (req.body.username=='') {
+                return res.render("login", {message:'Please type the username'});
+            } else if (req.body.password=='') {
+                return res.render("login", {message:'Please type the password'});
             }
         }
-        return res.redirect('/login');
+        req.session.authenticated=false;
+        return res.render("login", {message:'Wrong username or password.'});
 
     } catch (err) {
         console.error("Login Error:", err);
@@ -161,13 +168,13 @@ app.delete('/books/:id', async (req, res) => {
 // Search books with query
 app.get('/books/search', async (req, res) => {
     try {
-        const { title, author, genre, year } = req.query; 
+        const { title, author, genre, year } = req.query;
         const query = {};
 
         // 根據請求參數動態構建查詢條件
-        if (title) query.title = { $regex: title, $options: 'i' }; 
-        if (author) query.author = { $regex: author, $options: 'i' }; 
-        if (genre) query.genre = { $regex: genre, $options: 'i' }; 
+        if (title) query.title = { $regex: title, $options: 'i' };
+        if (author) query.author = { $regex: author, $options: 'i' };
+        if (genre) query.genre = { $regex: genre, $options: 'i' };
         if (year) query.year = parseInt(year);
 
         // 查詢數據庫
