@@ -1,6 +1,7 @@
 Project info:Public Library System
 Group:21
 Li Sin Chiu 13817508
+To Siu Lap 13709398
 
 project_root/
 ├── models/
@@ -29,7 +30,7 @@ project_root/
 ├── README.md
 
 Project file intro:
-server.js：
+server.js：Sets up server, handles routes like login,logout
 
 package.json：
 
@@ -49,15 +50,15 @@ public：
 views：
 	book.ejs : Admin page UI design using html
 		   Employees can add, delete, change and search existing books in the library
-	login.ejs
+	login.ejs : Display page for user to enter username,passwords to login
 	searchResults.ej : Display query results. Based on the user's search criteria,
 			   display a list of books that meet the criteria. If no books matching your criteria are found, 
 			   will show "No books found matching your criteria.".
 			   Receive the list of books passed by MongoDB and generate HTML.
 
 models：
-	book.js
-	User.js
+	book.js :Used to declare variables
+	User.js :Used to declare variables
 
 
 cloud-based server URL:
@@ -98,7 +99,13 @@ A.) Home page (main.html)
 		Library Staff can login to enter Admin page
 		How to Use: Click this button to browse login page
 B.)Login page
-
+	1.Username
+		Description: Allow user to input username
+	2.Password
+		Description: Allow user to input their password
+	3. Login button
+		Library Staff can login to enter Admin page
+		How to Use: Click this button login into account with verify username & password
 C.)Admin page (book.ejs)
 	1. Welcome, <%= username %>
 		Description: Displays a personalized welcome message with the username of the currently logged-in user.
