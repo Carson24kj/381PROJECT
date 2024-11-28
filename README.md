@@ -2,14 +2,16 @@ Project info:Public Library System
 cloud-based server URL:
 https://three81project-rddj.onrender.com
 
-Group:21
+Group:20
 Li Sin Chiu 13817508
 To Siu Lap 13709398
 Cheng Wing Choi 13714095
 Chris Limbu 13861857
 Guo Ke Jian 12928966
 
+```
 project_root/
+
 ├── models/
 │   ├── User.js
 │   ├── books.js
@@ -34,7 +36,7 @@ project_root/
 ├── package.json
 ├── package-lock.json
 ├── README.md
-
+```
 Project file intro:
 server.js：Sets up server, handles routes like login,logout
 
