@@ -264,28 +264,9 @@ curl -X POST https://three81project-rddj.onrender.com/logout
   - `genre` (string): Book genre
   - `ISBN` (string): ISBN code
 
-
 ```bash 
 curl -X GET \
-"https://three81project-rddj.onrender.com/books/create?title=Harry&author=AuthorName&year=2024&genre=Genre&ISBN=12345"
-```
-
-### Read/Search Books
-- **HTTP Method**: `POST`
-- **Endpoint**: `/books/read`
-- **Description**: Searches books by title, author, genre, or ISBN.
-- **Request Body**:
-  ```json
-  {
-    "title": "example",
-    "author": "example",
-    "genre": "example"
-  }
-
-```bash 
-curl -X POST -H "Content-Type: application/json" \
--d '{"title":"example","author":"example","genre":"example"}' \
-https://three81project-rddj.onrender.com/books/read
+"https://three81project-rddj.onrender.com/books/create?title=BookName&author=AuthorName&year=2024&genre=Genre&ISBN=12345"
 ```
 
 ### Update a Book
@@ -300,11 +281,10 @@ https://three81project-rddj.onrender.com/books/read
     "year": 2024
   }
 
-  
 ```bash
 curl -X PUT -H "Content-Type: application/json" \
 -d '{"title":"Updated Title","author":"Updated Author","year":2024}' \
-https://three81project-rddj.onrender.com/books/{bookId}
+https://three81project-rddj.onrender.com/books/674867ba0ab2a69255cf95fb
 ```
 
 ### Delete a Book
@@ -314,7 +294,7 @@ https://three81project-rddj.onrender.com/books/{bookId}
 
 
 ```bash
-curl -X DELETE https://three81project-rddj.onrender.com/books/{bookId}
+curl -X DELETE https://three81project-rddj.onrender.com/books/674867ba0ab2a69255cf95fb
 ```
 
 ### Search Books with Query Parameters
@@ -330,7 +310,7 @@ curl -X DELETE https://three81project-rddj.onrender.com/books/{bookId}
 
 ```bash
 curl -X GET \
-"https://three81project-rddj.onrender.com/books/search?title=example&author=example&genre=example&year=2024"
+"https://three81project-rddj.onrender.com/books/search?title=Harry%20Potter%20and%20the%20Sorcerer%27s%20Stone&author=J.K.%20Rowling&genre=Fantasy&year=1997"
 ```
 
 
