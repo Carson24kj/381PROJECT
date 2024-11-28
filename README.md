@@ -227,19 +227,112 @@ project_root/
 - **Back to Menu**: Press the button to return to the main page.
 
 
-RESTful CRUD services: 
+# RESTful CRUD services: 
 
-1. Authentication
+## 1. Authentication
 
-Login:
+### Login:
+- **HTTP Method**: `POST`
+- **Endpoint**: `/login`
+- **Description**: Logs in a admin user.
+-   **"username": "admin"**,
+    **"password": "123"**
 ```bash 
 curl -X POST https://three81project-rddj.onrender.com/login \
      -H "Content-Type: application/json" \
      -d '{"username": "admin", "password": "123"}'
 
 ```
-Logout:
+### Logout:
+- **HTTP Method**: `POST`
+- **Endpoint**: `/logout`
+- **Description**: Logs out the user and clears the session.
 ```bash 
 curl -X POST https://three81project-rddj.onrender.com/logout
 ```
+
+## 2. Books CRUD Operations
+
+### Create a Book
+- **HTTP Method**: `GET`
+- **Endpoint**: `/books/create`
+- **Description**: Adds a new book to the database.
+- **Query Parameters**:
+  - `title` (string): Book title
+  - `author` (string): Book author
+  - `year` (integer): Year of publication
+  - `genre` (string): Book genre
+  - `ISBN` (string): ISBN code
+
+
+```bash 
+curl -X GET \
+"https://three81project-rddj.onrender.com/books/create?title=Harry&author=AuthorName&year=2024&genre=Genre&ISBN=12345"
+```
+
+### Read/Search Books
+- **HTTP Method**: `POST`
+- **Endpoint**: `/books/read`
+- **Description**: Searches books by title, author, genre, or ISBN.
+- **Request Body**:
+  ```json
+  {
+    "title": "example",
+    "author": "example",
+    "genre": "example"
+  }
+
+```bash 
+curl -X POST -H "Content-Type: application/json" \
+-d '{"title":"example","author":"example","genre":"example"}' \
+https://three81project-rddj.onrender.com/books/read
+```
+
+### Update a Book
+- **HTTP Method**: `PUT`
+- **Endpoint**: `/books/:id`
+- **Description**: Updates details of a book using its ID.
+- **Request Body**:
+  ```json
+  {
+    "title": "Updated Title",
+    "author": "Updated Author",
+    "year": 2024
+  }
+
+  
+```bash
+curl -X PUT -H "Content-Type: application/json" \
+-d '{"title":"Updated Title","author":"Updated Author","year":2024}' \
+https://three81project-rddj.onrender.com/books/{bookId}
+```
+
+### Delete a Book
+- **HTTP Method**: `DELETE`
+- **Endpoint**: `/books/:id`
+- **Description**: Deletes a book by its ID.
+
+
+```bash
+curl -X DELETE https://three81project-rddj.onrender.com/books/{bookId}
+```
+
+### Search Books with Query Parameters
+- **HTTP Method**: `GET`
+- **Endpoint**: `/books/search`
+- **Description**: Searches books using query parameters.
+- **Query Parameters**:
+  - `title` (optional): Search by title (string)
+  - `author` (optional): Search by author (string)
+  - `genre` (optional): Search by genre (string)
+  - `year` (optional): Search by year (integer)
+
+
+```bash
+curl -X GET \
+"https://three81project-rddj.onrender.com/books/search?title=example&author=example&genre=example&year=2024"
+```
+
+
+
 
