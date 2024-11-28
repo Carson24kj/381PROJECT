@@ -21,6 +21,7 @@ Guo Ke Jian 12928966
 The **Library Management System** is a comprehensive tool designed to streamline book management for library administrators while offering a user-friendly interface for visitors. 
 
 - **Administrators** have full control over the library's collection, with features such as:
+  - Login/Logout
   - Adding new books.
   - Editing existing book details.
   - Deleting books from the database.
@@ -292,12 +293,11 @@ https://three81project-rddj.onrender.com/books/674867ba0ab2a69255cf95fb
 - **Endpoint**: `/books/:id`
 - **Description**: Deletes a book by its ID.
 
-
 ```bash
 curl -X DELETE https://three81project-rddj.onrender.com/books/674867ba0ab2a69255cf95fb
 ```
 
-### Search Books with Query Parameters
+### Search Books with Query Parameters for admin.
 - **HTTP Method**: `GET`
 - **Endpoint**: `/books/search`
 - **Description**: Searches books using query parameters.
@@ -313,6 +313,25 @@ curl -X GET \
 "https://three81project-rddj.onrender.com/books/search?title=Harry%20Potter%20and%20the%20Sorcerer%27s%20Stone&author=J.K.%20Rowling&genre=Fantasy&year=1997"
 ```
 
+### Search Books for Users
+- **HTTP Method**: `GET`
+- **Endpoint**: `/search`
+- **Description**: Allows users to search books using various query parameters.
+- **Query Parameters**:
+  - `q` (optional): Search by title or author (string, case-insensitive).
+  - `genre` (optional): Filter by genre (string, case-insensitive).
+  - `page` (optional): Specify the page number for paginated results (integer, default: 1).
+  - `limit` (optional): Specify the number of results per page (integer, default: 10).
+
+- **Example Usage**:
+  - Search for books with "Harry Potter" in the title or author:
+    ```bash
+    curl -X GET "https://three81project-rddj.onrender.com/search?q=Harry%20Potter"
+    ```
+  - Search for books in the "Fantasy" genre:
+    ```bash
+    curl -X GET "https://three81project-rddj.onrender.com/search?genre=Fantasy"
+    ```
 
 
 
