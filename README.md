@@ -141,7 +141,7 @@ project_root/
 
 
 ## B) Login Page
-
+### Sample Account : **Username: admin** , **Password: 123**
 1. **Username**
    - **Description**: Allows the user to input their username.
 
@@ -151,6 +151,7 @@ project_root/
 3. **Login Button**
    - **Description**: Enables library staff to log in and access the Admin page.
    - **How to Use**: Click this button to log in with a verified username and password.
+   - **Error Handling**: Error message will be displayed.
 
 ---
 
